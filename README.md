@@ -6,28 +6,6 @@ El [MNIST](http://yann.lecun.com/exdb/mnist/) es un conjunto de imágenes de dig
 
 Este dataset tiene mas de 60,000 imágenes separadas en 10 clases. El reto es construir un clasificador de imágenes que sea capaz de reconocer los digitos.
 
-### Formato Datos
-Todos los datos viven en la carpeta `.dataget/data` y se dividen en 2 grupos
-```
-|- .datageterman Traffic Signs
-   |- data
-      |- mnist
-         |- traning-set
-         |- test-set
-```
-**Estructura** <br>
-Cada sub conjunto de datos (training-set o test-set) tiene la siguiente estructura
-```
-|- {subset}
-   |- {class_id}
-      |- {image_id}.jpg
-```
-Donde
-* `subset`: es `training-set` o `test-set`
-* `class_id`: es el identificador de una clase, e.g. 0, 1, 2... 42
-* `image_id`: es el nombre de una imagen.
-
-
 ### Variables
 Cada imagen como tal puede ser representada por una matriz de dimensiones `height x width` dado que estan en escala de grises.
 
@@ -41,34 +19,7 @@ score = n_aciertos / n_imagenes * 100
 ```
 donde `n_aciertos` es el numero de imagenes clasificadas de forma correcta y `n_imagenes` es el numero total de imagenes en el `test-set`.
 
-### Notas Teoricas
-* Dado que las imagenes son conjuntos con dimensiones muy altas, usualmente la mejor manera de atacar el problema es utilizando [redes neuronales](https://en.wikipedia.org/wiki/Artificial_neural_network).
-  * Para imagenes es recomendable utilizar redes [convolucionales](http://cs231n.github.io/convolutional-networks/).
-
-### Solucion
-Ver procedimiento de [solucion](https://github.com/colomb-ia/formato-retos#solucion).
-
-##### Requerimientos
-*Indica los requerimientos para utilizar el codigo de tu solucion.*
-
-##### Procedimiento
-*Indica el procedimiento que se debe seguir para reproducir tu solucion.*
-
-##### Metodo
-*Indica el metodo que utilizaste para solucionar el reto.*
-
-##### Resultados
-*Indica el metodo que utilizaste para solucionar el reto.*
-
-## Getting Started
-Para resolver este reto primero has un [fork](https://help.github.com/articles/fork-a-repo/) de este repositorio y [clona](https://help.github.com/articles/cloning-a-repository/) el fork en tu maquina.
-
-```bash
-git clone https://github.com/{username}/supervised-avanzado-mnist
-cd supervised-avanzado-mnist
-```
-
-*Nota: reemplaza `{username}` con tu nombre de usuario de Github.*
+### Solución
 
 ### Requerimientos
 Para descargar y visualizar los datos necesitas Python 2 o 3. Las dependencias las puedes encontrar en el archivo `requirements.txt`, el cual incluye
@@ -77,7 +28,7 @@ Para descargar y visualizar los datos necesitas Python 2 o 3. Las dependencias l
 * pandas
 * jupyter
 
-Puedes instalarlas fácilmente utilizando el commando
+Para crear el modelo solo necesitas scikit-learn. Puedes instalarlas fácilmente utilizando el commando
 
 ```bash
 pip install -r requirements.txt
@@ -89,11 +40,29 @@ Para descargar los datos ejecuta el comando
 ```bash
 dataget get mnist
 ```
-Esto descarga los archivos en la carpeta `.dataget/data`, los divide en los conjuntos `training-set` y `test-set`, convierte las imagenes en `jpg` de dimensiones `32x32`. Las originalmente vienen en formato `.ppm` y con dimensiones variables. Si deseas mantener el formato original ejecuta en vez
+Esto descarga los archivos en la carpeta `.dataget/data`, los divide en los conjuntos `training-set` y `test-set`, convierte las imagenes en `jpg` de dimensiones `32x32`.
 
-```bash
-dataget get --dont-process mnist
+
+##### Procedimiento
+Para entrenar el modelo y a la vez validarlo ejecutar el siguiente comando de consola:
+
 ```
+python model.py
+```
+
+El entrenamiento puede demorar alrededor de 30 minutos.
+
+##### Método
+Se usó una máquina de soporte vectorial con kernel radial (RBF) con parámetros:
+* C = 5
+* gamma = 0.05
+
+La entrada al modelo son las imágenes (en forma de vector aplanadas) pero transformando la magnitud de los pixeles entre 0 y 1. Los parámetros fueron consultados de otras soluciones en la Web.
+
+##### Resultados
+Resultado: **0.9837**
+
+
 
 # Starter Code Python
 Para iniciar con este reto puedes correr el codigo de Python en Jupyter del archivo `python-sample.ipynb`. Este código que ayudará a cargar y visualizar algunas imágenes. Las dependencias son las mismas que se instalaron durante la descarga de los datos, ver [Requerimientos](#requerimientos).
@@ -104,12 +73,6 @@ Para iniciar el código solo hay que prender Jupyter en esta carpeta
 jupyter notebook .
 ```
 y abrir el archivo `python-sample.ipynb`.
-
-
-# Soluciones
-| Score | Usuario |	Algoritmo | Link Repo |
-| - | - | - | - |
-| *score* | *nombre* | *algoritmo* | *link* |
 
 
 
